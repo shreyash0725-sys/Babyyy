@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Stuti ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Fredoka',sans-serif;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+background:linear-gradient(135deg,#cceeff,#e6f7ff);
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.page{
+position:absolute;
+width:100%;
+height:100%;
+display:none;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+animation:fade 0.8s ease;
+}
+
+.page.active{
+display:flex;
+}
+
+h1{
+color:#ff4d88;
+font-size:3rem;
+margin-bottom:15px;
+}
+
+h2{
+color:#ff6699;
+font-size:2rem;
+margin-bottom:15px;
+}
+
+p{
+font-size:1.3rem;
+color:#444;
+margin:8px;
+}
+
+button{
+padding:15px 35px;
+margin-top:25px;
+border:none;
+border-radius:50px;
+background:#ff7eb6;
+color:white;
+font-size:1.2rem;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 5px 15px rgba(0,0,0,0.15);
+}
+
+button:hover{
+transform:scale(1.08);
+}
+
+.progress-container{
+width:80%;
+max-width:500px;
+height:35px;
+background:white;
+border-radius:50px;
+overflow:hidden;
+margin-top:20px;
+box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+.progress-bar{
+height:100%;
+width:0%;
+border-radius:50px;
+background:linear-gradient(
+90deg,
+#ff7eb6,
+#ff4d88,
+#ffb6d9,
+#ff4d88
+);
+background-size:300% 100%;
+animation:shimmer 2s linear infinite;
+transition:width 0.2s ease;
+}
+
+#percent{
+margin-top:15px;
+font-size:1.5rem;
+font-weight:bold;
+color:#ff4d88;
+}
+
+.face{
+font-size:100px;
+margin-top:15px;
+}
+
+.heart{
+position:absolute;
+color:#ff4d88;
+animation:float 7s linear infinite;
+opacity:0.8;
+}
+
+.confetti{
+position:absolute;
+width:10px;
+height:10px;
+animation:fall 2.5s linear forwards;
+}
+
+@keyframes shimmer{
+0%{background-position:0%;}
+100%{background-position:300%;}
+}
+
+@keyframes float{
+from{
+transform:translateY(100vh);
+opacity:0;
+}
+to{
+transform:translateY(-100px);
+opacity:1;
+}
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh) rotate(720deg);
+opacity:0;
+}
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:scale(0.9);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+@keyframes pop{
+0%{transform:scale(0);}
+70%{transform:scale(1.15);}
+100%{transform:scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+<h1>🥰 HEYYYY CUTIEEEE PIEEEE 🥰</h1>
+<h2>I LOVE YOU STUTI ❤️</h2>
+<button onclick="nextPage(2)">Let's continue</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+<h1>You think you're not cute???</h1>
+<h2>Let's check now</h2>
+<p>Press below to check your cuteness percentage</p>
+<button onclick="goToLoading()">CUTE</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+<h1>Calculating...</h1>
+
+<div class="progress-container">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<p id="percent">0%</p>
+
+<button id="resultBtn" style="display:none;" onclick="nextPage(4)">
+Check Results
+</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page4">
+<h1>Damn baby your cuteness cannot be measured 💖</h1>
+<h2>♾️ % CUTE</h2>
+
+<div class="face">😁</div>
+
+<button onclick="nextPage(5)">Next</button>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page" id="page5">
+<h1>I LOVEE YOUU SOO MUCHH BABYYYY 💗</h1>
+<p>I WANT YOU AND ONLY YOU FOREVER ♾️</p>
+<p>BYEEEE HAVE FUNNNN 😋😘😍🥰</p>
+</div>
+
+<script>
+
+function nextPage(pageNumber){
+
+document.querySelectorAll('.page').forEach(page=>{
+page.classList.remove('active');
+});
+
+document.getElementById('page'+pageNumber).classList.add('active');
+
+confettiBurst();
+}
+
+function goToLoading(){
+nextPage(3);
+startLoading();
+}
+
+function startLoading(){
+
+let progress = 0;
+
+const bar = document.getElementById("progressBar");
+const percent = document.getElementById("percent");
+const button = document.getElementById("resultBtn");
+
+bar.style.width = "0%";
+button.style.display = "none";
+
+function animate(){
+
+progress += Math.random()*3 + 0.8;
+
+if(progress >= 100){
+
+progress = 100;
+
+bar.style.width = "100%";
+percent.innerText = "100%";
+
+setTimeout(()=>{
+button.style.display = "inline-block";
+button.style.animation = "pop 0.5s ease";
+confettiBurst();
+},600);
+
+return;
+}
+
+bar.style.width = progress + "%";
+percent.innerText = Math.floor(progress) + "%";
+
+requestAnimationFrame(animate);
+}
+
+animate();
+}
+
+function createHeart(){
+
+const heart = document.createElement("div");
+
+heart.classList.add("heart");
+heart.innerHTML = "❤️";
+
+heart.style.left = Math.random()*100 + "vw";
+heart.style.fontSize = (20 + Math.random()*30) + "px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},7000);
+}
+
+setInterval(createHeart,500);
+
+function confettiBurst(){
+
+const colors = [
+"#ff4d88",
+"#ff99cc",
+"#66ccff",
+"#ffcc00",
+"#99ff99",
+"#ff9966"
+];
+
+for(let i=0;i<80;i++){
+
+const conf = document.createElement("div");
+
+conf.classList.add("confetti");
+
+conf.style.left = Math.random()*100 + "vw";
+conf.style.top = "-20px";
+
+conf.style.background =
+colors[Math.floor(Math.random()*colors.length)];
+
+document.body.appendChild(conf);
+
+setTimeout(()=>{
+conf.remove();
+},2500);
+}
+}
+
+</script>
+
+</body>
+</html>
